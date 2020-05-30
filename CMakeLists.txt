@@ -7,8 +7,8 @@ set(SRC src/main.cpp)
 
 add_executable(sqman.exe ${SRC})
 
-target_link_libraries( sqman sfml-sfml)
-target_link_libraries( sqman sfml-window)
-target_link_libraries( sqman sfml-graphics)
-target_link_libraries( sqman sfml-audio)
-target_link_libraries( sqman sfml-network)
+target_link_libraries(sqman.exe sfml-system)
+target_link_libraries(sqman.exe sfml-window)
+target_link_libraries(sqman.exe sfml-graphics)
+target_link_libraries(sqman.exe sfml-audio)
+target_link_libraries(sqman.exe sfml-network)
