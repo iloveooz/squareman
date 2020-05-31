@@ -1,15 +1,24 @@
-#include <iostream>
-#include <SFML/System.hpp>
+#include <SFML/Graphics.hpp>
 
 int main() {
+	sf::RenderWindow window(sf::VideoMode(640, 480), "SquareMan");
 	
-	std::cout << "SquareMan" << std::endl;
-	
-	sf::Time time = sf::seconds(1.2);
-	
-	auto timeInSeconds = time.asSeconds();
-	
-	std::cout << timeInSeconds << std::endl;
+	while (window.isOpen()) {
+		
+		sf::Event event;
+		
+		while (window.pollEvent(event)) {
+			if (event.type == sf::Event::Closed) {
+				window.close();
+			}
+		}
+		
+		window.clear();
+		
+		// draw here...
+		
+		window.display();
+	}
 	
 	return EXIT_SUCCESS;
 }
