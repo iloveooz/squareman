@@ -18,7 +18,7 @@ public:
 private:
 	sf::RenderWindow m_window;
 	GameState* m_currentState;
-	std::array<GameState *, GameState::Count> m_gameStates;
+	std::array <GameState*, GameState::Count> m_gameStates;
 };
 
 #endif // SQUAREMAN_GAME_HPP
