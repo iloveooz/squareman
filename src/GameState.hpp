@@ -41,6 +41,11 @@ public:
 	
 	void update(sf::Time delta);
 	void draw(sf::RenderWindow& window);
+private:
+	sf::Text m_text;
+	sf::Sprite m_sprite;
+	
+	bool m_displayText;
 };
 
 class GetReadyState : public GameState {
@@ -53,6 +58,8 @@ public:
 	
 	void update(sf::Time delta);
 	void draw(sf::RenderWindow& window);
+private:
+	sf::Text m_text;
 };
 
 class PlayingState : public GameState {
@@ -77,6 +84,10 @@ public:
 	
 	void update(sf::Time delta);
 	void draw(sf::RenderWindow& window);
+private:
+	sf::Text m_text;
+	sf::Time m_countDown;
+	sf::Text m_countDownText;
 };
 
 class WonState : public GameState {
@@ -89,6 +100,8 @@ public:
 	
 	void update(sf::Time delta);
 	void draw(sf::RenderWindow& window);
+private:
+	sf::Text m_text;
 };
 
 #endif // SQUAREMAN_GAMESTATE_HPP

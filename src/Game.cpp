@@ -2,6 +2,16 @@
 #include <iostream>
 
 Game::Game() : m_window(sf::VideoMode(640, 480), "SquareMan") {
+	
+	if (!m_font.loadFromFile("assets/font.ttf"))
+		throw std::runtime_error("Unable to load the font file");
+		
+	if (!m_logo.loadFromFile("assets/logo.png"))
+		throw std::runtime_error("Unable to load the logo file");
+		
+	if (!m_texture.loadFromFile("assets/texture.png"))
+		throw std::runtime_error("Unable to load the texture file");
+	
 	m_gameStates[GameState::NoCoin] = new NoCoinState(this);
 	m_gameStates[GameState::GetReady] = new GetReadyState(this);
 	m_gameStates[GameState::Playing] = new PlayingState(this);
@@ -17,6 +27,9 @@ Game::~Game() {
 }
 
 void Game::run() {
+	
+	sf::Clock frameClock;
+	
 	while (m_window.isOpen()) {
 		
 		sf::Event event;
@@ -53,7 +66,7 @@ void Game::run() {
 			}
 		}
 		
-		m_currentState->update(sf::seconds(1));
+		m_currentState->update(frameClock.restart());
 		m_window.clear();
 		
 		m_currentState->draw(m_window);
@@ -64,4 +77,16 @@ void Game::run() {
 
 void Game::changeGameState(GameState::State gameState) {
 	m_currentState = m_gameStates[gameState];
+}
+
+sf::Font& Game::getFont() {
+	return m_font;
+}
+
+sf::Texture& Game::getLogo() {
+	return m_logo;
+}
+
+sf::Texture& Game::getTexture() {
+	return m_texture;
 }
