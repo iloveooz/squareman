@@ -1,0 +1,6 @@
+#ifndef SQUAREMAN_BONUS_HPP
+#define SQUAREMAN_BONUS_HPP
+
+
+
+#endif // SQUAREMAN_BONUS_HPP

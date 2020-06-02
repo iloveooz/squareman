@@ -1,0 +1,6 @@
+#ifndef SQUAREMAN_GHOST_HPP
+#define SQUAREMAN_GHOST_HPP
+
+
+
+#endif // SQUAREMAN_GHOST_HPP
