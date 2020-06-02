@@ -4,8 +4,13 @@ project ("SquareMan")
 add_definitions("-std=c++11")
 
 set(SRC src/main.cpp
+		src/Bonus.cpp
+		src/Character.cpp
+		src/Dot.cpp
 		src/Game.cpp
-		src/GameState.cpp)
+		src/GameState.cpp
+		src/Ghost.cpp
+		src/Squareman.cpp)
 
 add_executable(sqman.exe ${SRC})
 
