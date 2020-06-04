@@ -4,6 +4,7 @@ project ("SquareMan")
 add_definitions("-std=c++11")
 
 set(SRC src/main.cpp
+		src/Animator.cpp
 		src/Bonus.cpp
 		src/Character.cpp
 		src/Dot.cpp
