@@ -21,7 +21,8 @@ private:
 	bool m_isPlaying;
 	sf::Time m_duration;
 	bool m_loop;
-
+	
+	unsigned int m_currentFrame;
 };
 
 #endif // SQUAREMAN_ANIMATOR_HPP
