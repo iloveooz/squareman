@@ -3,6 +3,7 @@
 
 #include "Character.hpp"
 #include "Squareman.hpp"
+#include "Animator.hpp"
 
 class Ghost : public Character {
 public:
@@ -23,6 +24,11 @@ private:
 	
 	sf::Time m_weaknessDuration;
 	sf::Sprite m_visual;
+	
+	Squareman* m_squareman;
+	
+	Animator m_strongAnimator;
+	Animator m_weakAnimator;
 };
 
 
