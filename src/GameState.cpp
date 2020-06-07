@@ -86,17 +86,30 @@ void GetReadyState::draw(sf::RenderWindow& window) {
 
 
 // ----- PlayingState
-PlayingState::PlayingState(Game* game) : GameState(game) { }
+PlayingState::PlayingState(Game* game) : GameState(game), m_squareman(game->getTexture()), m_ghost(game->getTexture()) {
+	m_squareman.move(100, 100);
+	m_ghost.move(200, 100);
+}
 
-void PlayingState::insertCoin() { }
+void PlayingState::insertCoin() { 
+	m_squareman.die();
+}
 
-void PlayingState::pressButton() { }
+void PlayingState::pressButton() { 
+	m_ghost.setWeak(sf::seconds(1));
+}
 
 void PlayingState::moveStick(sf::Vector2i direction) { }
 
-void PlayingState::update(sf::Time delta) { }
+void PlayingState::update(sf::Time delta) { 
+	m_squareman.update(delta);
+	m_ghost.update(delta);
+}
 
-void PlayingState::draw(sf::RenderWindow& window) { }
+void PlayingState::draw(sf::RenderWindow& window) { 
+	window.draw(m_squareman);
+	window.draw(m_ghost);
+}
 
 
 // ----- LostState

@@ -16,7 +16,8 @@ public:
 
 	void setWeak(sf::Time duration);
 	bool isWeak() const;
-		
+	
+	void update(sf::Time delta);		
 private:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	

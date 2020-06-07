@@ -19,6 +19,7 @@ private:
 	
 	bool m_isDying;
 	bool m_isDead;
+	
 	sf::Sprite m_visual;
 	
 	Animator m_runAnimator;

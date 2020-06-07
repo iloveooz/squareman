@@ -3,6 +3,9 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Squareman.hpp"
+#include "Ghost.hpp"
+
 class Game;
 
 class GameState {
@@ -72,6 +75,10 @@ public:
 	
 	void update(sf::Time delta);
 	void draw(sf::RenderWindow& window);
+
+private:
+	Squareman m_squareman;
+	Ghost m_ghost;
 };
 
 class LostState : public GameState {
