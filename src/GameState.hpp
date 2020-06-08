@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Maze.hpp"
 #include "Squareman.hpp"
 #include "Ghost.hpp"
 
@@ -79,6 +80,7 @@ public:
 private:
 	Squareman m_squareman;
 	Ghost m_ghost;
+	Maze m_maze;
 };
 
 class LostState : public GameState {

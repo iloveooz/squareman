@@ -1,5 +1,6 @@
 #include "GameState.hpp"
 #include "Game.hpp"
+#include "Maze.hpp"
 
 GameState::GameState(Game* game) : m_game(game) {
 	
@@ -89,6 +90,7 @@ void GetReadyState::draw(sf::RenderWindow& window) {
 PlayingState::PlayingState(Game* game) : GameState(game), m_squareman(game->getTexture()), m_ghost(game->getTexture()) {
 	m_squareman.move(100, 100);
 	m_ghost.move(200, 100);
+	m_maze.loadLevel("level");
 }
 
 void PlayingState::insertCoin() { 
@@ -109,6 +111,7 @@ void PlayingState::update(sf::Time delta) {
 void PlayingState::draw(sf::RenderWindow& window) { 
 	window.draw(m_squareman);
 	window.draw(m_ghost);
+	window.draw(m_maze);
 }
 
 

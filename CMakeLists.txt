@@ -11,7 +11,8 @@ set(SRC src/main.cpp
 		src/Game.cpp
 		src/GameState.cpp
 		src/Ghost.cpp
-		src/Squareman.cpp)
+		src/Squareman.cpp
+		src/Maze.cpp)
 
 add_executable(sqman.exe ${SRC})
 
