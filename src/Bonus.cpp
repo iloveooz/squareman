@@ -1,4 +1,4 @@
-#include "Bonus.hpp"
+#include "../include/Bonus.hpp"
 
 Bonus::Bonus(sf::Texture& texture) : m_visual(texture) {
 	m_visual.setOrigin(15, 15);

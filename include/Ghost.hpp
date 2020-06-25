@@ -1,9 +1,9 @@
 #ifndef SQUAREMAN_GHOST_HPP
 #define SQUAREMAN_GHOST_HPP
 
-#include "Character.hpp"
-#include "Squareman.hpp"
-#include "Animator.hpp"
+#include "../include/Character.hpp"
+#include "../include/Squareman.hpp"
+#include "../include/Animator.hpp"
 
 class Ghost : public Character {
 public:

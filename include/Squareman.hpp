@@ -1,8 +1,8 @@
 #ifndef SQUAREMAN_SQUAREMAN_HPP
 #define SQUAREMAN_SQUAREMAN_HPP
 
-#include "Character.hpp"
-#include "Animator.hpp"
+#include "../include/Character.hpp"
+#include "../include/Animator.hpp"
 
 class Squareman : public Character {
 public: 

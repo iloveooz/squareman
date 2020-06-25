@@ -3,9 +3,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Maze.hpp"
-#include "Squareman.hpp"
-#include "Ghost.hpp"
+#include "../include/Maze.hpp"
+#include "../include/Squareman.hpp"
+#include "../include/Ghost.hpp"
 
 class Game;
 

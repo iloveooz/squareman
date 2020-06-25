@@ -4,7 +4,7 @@
 #include <array>
 
 #include <SFML/Graphics.hpp>
-#include "GameState.hpp"
+#include "../include/GameState.hpp"
 
 class Game {
 public:
