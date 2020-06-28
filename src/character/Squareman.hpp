@@ -2,7 +2,7 @@
 #define SQUAREMAN_SQUAREMAN_HPP
 
 #include "Character.hpp"
-#include "Animator.hpp"
+#include "../animator/Animator.hpp"
 
 class Squareman : public Character {
 	

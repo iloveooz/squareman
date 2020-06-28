@@ -1,4 +1,4 @@
-#include "include/Dot.hpp"
+#include "Dot.hpp"
 
 sf::CircleShape getDot() {
 	sf::CircleShape dot;

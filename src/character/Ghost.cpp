@@ -1,4 +1,4 @@
-#include "include/Ghost.hpp"
+#include "Ghost.hpp"
 
 Ghost::Ghost(sf::Texture& texture) : m_visual(texture), m_isWeak(false), m_weaknessDuration(sf::Time::Zero) {
 	setOrigin(20, 20);

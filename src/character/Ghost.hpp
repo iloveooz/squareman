@@ -3,7 +3,7 @@
 
 #include "Character.hpp"
 #include "Squareman.hpp"
-#include "Animator.hpp"
+#include "../animator/Animator.hpp"
 
 class Ghost : public Character {
 public:

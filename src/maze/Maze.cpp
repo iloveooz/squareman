@@ -1,5 +1,5 @@
-#include "include/Maze.hpp"
-#include "include/Dot.hpp"
+#include "Maze.hpp"
+#include "../dot/Dot.hpp"
 
 Maze::Maze() : m_mazeSize(0, 0) {
 	
