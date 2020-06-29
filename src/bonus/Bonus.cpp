@@ -1,6 +1,7 @@
 #include "Bonus.hpp"
 
-Bonus::Bonus(sf::Texture& texture) : m_visual(texture) {
+Bonus::Bonus(sf::Texture& texture) : 
+m_visual(texture) {
 	m_visual.setOrigin(15, 15);
 	setFruit(Banana);
 }

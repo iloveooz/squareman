@@ -2,7 +2,8 @@
 #include "Game.hpp"
 #include "../maze/Maze.hpp"
 
-GameState::GameState(Game* game) : m_game(game) {
+GameState::GameState(Game* game) : 
+m_game(game) {
 	
 }
 

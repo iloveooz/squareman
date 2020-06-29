@@ -1,7 +1,8 @@
 #include "Maze.hpp"
 #include "../dot/Dot.hpp"
 
-Maze::Maze() : m_mazeSize(0, 0) {
+Maze::Maze() : 
+m_mazeSize(0, 0) {
 	
 }
 

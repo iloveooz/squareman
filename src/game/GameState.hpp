@@ -45,6 +45,7 @@ public:
 	
 	void update(sf::Time delta);
 	void draw(sf::RenderWindow& window);
+	
 private:
 	sf::Text m_text;
 	sf::Sprite m_sprite;
@@ -62,6 +63,7 @@ public:
 	
 	void update(sf::Time delta);
 	void draw(sf::RenderWindow& window);
+	
 private:
 	sf::Text m_text;
 };
@@ -93,6 +95,7 @@ public:
 	
 	void update(sf::Time delta);
 	void draw(sf::RenderWindow& window);
+	
 private:
 	sf::Text m_text;
 	sf::Time m_countDown;
@@ -109,6 +112,7 @@ public:
 	
 	void update(sf::Time delta);
 	void draw(sf::RenderWindow& window);
+	
 private:
 	sf::Text m_text;
 };

@@ -1,8 +1,10 @@
 #include "Character.hpp"
 
-Character::Character() : m_speed(1.f) {
-	
-}
+Character::Character() : 
+m_maze(nullptr),
+m_speed(1.f),
+m_currentDirection(1, 0),
+m_nextDirection(0, 0) {}
 
 void Character::setSpeed(float speed) {
 	m_speed = speed;
@@ -10,4 +12,20 @@ void Character::setSpeed(float speed) {
 
 float Character::getSpeed() const {
 	return m_speed;
+}
+
+void Character::setDirection(sf::Vector2i direction) {
+	m_nextDirection = direction;
+}
+
+sf::Vector2i Character::getDirection() const {
+	return m_currentDirection;
+}
+
+void Character::update(sf::Time delta) {
+	// m_currentDirection = m_nextDirection;
+}
+
+void Character::setMaze(Maze* maze) {
+	m_maze = maze;
 }

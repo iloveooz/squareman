@@ -1,7 +1,11 @@
 #include "Animator.hpp"
 
 // animator is not palying anything when constructed
-Animator::Animator() : m_currentFrame(0), m_isPlaying(false), m_duration(sf::Time::Zero), m_loop(false) { }
+Animator::Animator() : 
+m_currentFrame(0), 
+m_isPlaying(false), 
+m_duration(sf::Time::Zero), 
+m_loop(false) {}
 
 void Animator::addFrame(sf::IntRect frame) {
 	m_frames.push_back(frame);

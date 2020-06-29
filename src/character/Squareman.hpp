@@ -5,7 +5,6 @@
 #include "../animator/Animator.hpp"
 
 class Squareman : public Character {
-	
 public: 
 	Squareman(sf::Texture& texture);
 

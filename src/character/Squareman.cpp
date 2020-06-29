@@ -1,6 +1,9 @@
 #include "Squareman.hpp"
 
-Squareman::Squareman(sf::Texture& texture) : m_visual(texture), m_isDying(false), m_isDead(false) {
+Squareman::Squareman(sf::Texture& texture) :
+m_visual(texture),
+m_isDying(false), 
+m_isDead(false) {
 	setOrigin(20, 20);	
 	
 	// set animation data, we can take this information from the sprite sheet
