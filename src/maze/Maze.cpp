@@ -57,6 +57,7 @@ void Maze::loadLevel(const std::string& name) {
 		
 		if (m_mazeData[i] == Wall) {
 			sf::RectangleShape wall;
+			
 			wall.setSize(sf::Vector2f(32, 32));
 			wall.setFillColor(sf::Color::Blue);
 			wall.setPosition(32 * position.x, 32 * position.y);
