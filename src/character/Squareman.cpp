@@ -46,6 +46,8 @@ void Squareman::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 }
 
 void Squareman::update(sf::Time delta) {
+	Character::update(delta);
+	
 	if (!m_isDead && !m_isDying) {
 		m_runAnimator.update(delta);
 		m_runAnimator.animate(m_visual);

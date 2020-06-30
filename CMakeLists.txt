@@ -3,6 +3,8 @@ project ("SquareMan")
 
 add_definitions("-std=c++11")
 
+set(CMAKE_BUILD_TYPE Debug)
+
 set(SRC src/main.cpp
 		src/animator/Animator.cpp
 		src/bonus/Bonus.cpp

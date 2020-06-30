@@ -82,7 +82,7 @@ public:
 
 private:
 	// there is only one squareman
-	Squareman* m_squareman;
+	Character* m_squareman;
 	std::vector <Ghost*> m_ghosts;
 	// Ghost m_ghost;
 	Maze m_maze;

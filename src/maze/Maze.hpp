@@ -23,6 +23,8 @@ public:
 	sf::Vector2i mapPixelToCell(sf::Vector2f pixel) const;
 	sf::Vector2f mapCellToPixel(sf::Vector2i cell) const;
 	
+	bool isWall(sf::Vector2i position) const;
+	
 private:
 	enum cellData {
 		Empty,
