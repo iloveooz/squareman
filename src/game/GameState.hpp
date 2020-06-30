@@ -71,6 +71,7 @@ private:
 class PlayingState : public GameState {
 public:
 	PlayingState(Game* game);
+	~PlayingState();
 
 	void insertCoin();
 	void pressButton();
@@ -80,8 +81,10 @@ public:
 	void draw(sf::RenderWindow& window);
 
 private:
-	Squareman m_squareman;
-	Ghost m_ghost;
+	// there is only one squareman
+	Squareman* m_squareman;
+	std::vector <Ghost*> m_ghosts;
+	// Ghost m_ghost;
 	Maze m_maze;
 };
 

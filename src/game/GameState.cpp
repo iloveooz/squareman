@@ -88,31 +88,58 @@ void GetReadyState::draw(sf::RenderWindow& window) {
 
 
 // ----- PlayingState
-PlayingState::PlayingState(Game* game) : GameState(game), m_squareman(game->getTexture()), m_ghost(game->getTexture()) {
-	m_squareman.move(100, 100);
-	m_ghost.move(200, 100);
+PlayingState::PlayingState(Game* game) : 
+GameState(game), 
+// m_squareman(game->getTexture()), 
+// m_ghost(game->getTexture()),
+m_squareman(nullptr) {
+	// m_squareman.move(100, 100);
+	// m_ghost.move(200, 100);
 	m_maze.loadLevel("level");
+	
+	m_squareman = new Squareman(game->getTexture());
+	m_squareman->setMaze(&m_maze);
+	m_squareman->setPosition(m_maze.mapCellToPixel(m_maze.getSquaremanPosition()));
+	
+	for (auto ghostPosition : m_maze.getGhostPositions()) {
+		Ghost* ghost = new Ghost(game->getTexture());
+		ghost->setMaze(&m_maze);
+		ghost->setPosition(m_maze.mapCellToPixel(ghostPosition));
+		m_ghosts.push_back(ghost);
+	}
+}
+
+PlayingState::~PlayingState() {
+	delete m_squareman;
+	
+	for (Ghost* ghost : m_ghosts)
+		delete ghost;
 }
 
 void PlayingState::insertCoin() { 
-	m_squareman.die();
+	// m_squareman.die();
 }
 
 void PlayingState::pressButton() { 
-	m_ghost.setWeak(sf::seconds(1));
+	// m_ghost.setWeak(sf::seconds(1));
 }
 
 void PlayingState::moveStick(sf::Vector2i direction) { }
 
 void PlayingState::update(sf::Time delta) { 
-	m_squareman.update(delta);
-	m_ghost.update(delta);
+	m_squareman->update(delta);
+	
+	for (Ghost* ghost : m_ghosts)
+		ghost->update(delta);
 }
 
 void PlayingState::draw(sf::RenderWindow& window) { 
-	window.draw(m_squareman);
-	window.draw(m_ghost);
 	window.draw(m_maze);
+		
+	window.draw(*m_squareman);
+	
+	for (Ghost* ghost : m_ghosts)
+		window.draw(*ghost);
 }
 
 

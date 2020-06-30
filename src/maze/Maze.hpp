@@ -2,6 +2,7 @@
 #define SQUAREMAN_MAZE_HPP
 
 #include <vector>
+#include <cmath>
 
 #include <SFML/Graphics.hpp>
 
@@ -17,6 +18,10 @@ public:
 	// helpers (inline = faster) 
 	inline std::size_t positionToIndex(sf::Vector2i position) const;
 	inline sf::Vector2i indexToPosition(std::size_t index) const;
+	
+	// sf::Vector2i squaremanPosition = m_maze.getSquaremanPosition();
+	sf::Vector2i mapPixelToCell(sf::Vector2f pixel) const;
+	sf::Vector2f mapCellToPixel(sf::Vector2i cell) const;
 	
 private:
 	enum cellData {
