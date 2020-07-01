@@ -4,6 +4,8 @@
 Game::Game() : 
 m_window(sf::VideoMode(640, 480), "SquareMan") {
 	
+	m_window.setFramerateLimit(120);
+	
 	if (!m_font.loadFromFile("assets/font.ttf"))
 		throw std::runtime_error("Unable to load the font file");
 		
