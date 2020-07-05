@@ -90,13 +90,9 @@ void GetReadyState::draw(sf::RenderWindow& window) {
 // ----- PlayingState
 PlayingState::PlayingState(Game* game) : 
 GameState(game), 
-// m_squareman(game->getTexture()), 
-// m_ghost(game->getTexture()),
 m_maze(game->getTexture()),
 m_squareman(nullptr) {
-	// m_squareman.move(100, 100);
-	// m_ghost.move(200, 100);
-	m_maze.loadLevel("level");
+	m_maze.loadLevel("large-level");
 	
 	m_squareman = new Squareman(game->getTexture());
 	m_squareman->setMaze(&m_maze);
@@ -108,6 +104,8 @@ m_squareman(nullptr) {
 		ghost->setPosition(m_maze.mapCellToPixel(ghostPosition));
 		m_ghosts.push_back(ghost);
 	}
+	
+	m_camera.setSize(sf::Vector2f(480, 480));
 }
 
 PlayingState::~PlayingState() {
@@ -128,15 +126,30 @@ void PlayingState::pressButton() {
 void PlayingState::moveStick(sf::Vector2i direction) { }
 
 void PlayingState::update(sf::Time delta) { 
+	m_camera.setCenter(m_squareman->getPosition());
+	
+	if (m_camera.getCenter().x < 240) 
+		m_camera.setCenter(240, m_camera.getCenter().y);
+	
+	if (m_camera.getCenter().y < 240) 
+		m_camera.setCenter(m_camera.getCenter().x, 240);
+		
+	if (m_camera.getCenter().x > m_maze.getSize().x * 32 - 240)
+		m_camera.setCenter(m_maze.getSize().x * 32 - 240, m_camera.getCenter().y);
+		
+	if (m_camera.getCenter().y > m_maze.getSize().y * 32 - 240)
+		m_camera.setCenter(m_camera.getCenter().x, m_maze.getSize().y * 32 - 240);
+	
 	m_squareman->update(delta);
 	
 	for (Ghost* ghost : m_ghosts)
 		ghost->update(delta);
 }
 
-void PlayingState::draw(sf::RenderWindow& window) { 
+void PlayingState::draw(sf::RenderWindow& window) {
+	window.setView(m_camera);
+	
 	window.draw(m_maze);
-		
 	window.draw(*m_squareman);
 	
 	for (Ghost* ghost : m_ghosts)

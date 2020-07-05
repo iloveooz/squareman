@@ -86,6 +86,7 @@ private:
 	std::vector <Ghost*> m_ghosts;
 	// Ghost m_ghost;
 	Maze m_maze;
+	sf::View m_camera;
 };
 
 class LostState : public GameState {

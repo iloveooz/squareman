@@ -163,6 +163,10 @@ void Maze::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	}
 }
 
+sf::Vector2i Maze::getSize() const {
+	return m_mazeSize;
+}
+
 sf::Vector2i Maze::getSquaremanPosition() const {
 	return m_squaremanPosition;
 }
