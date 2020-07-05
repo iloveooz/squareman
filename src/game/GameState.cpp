@@ -92,6 +92,7 @@ PlayingState::PlayingState(Game* game) :
 GameState(game), 
 // m_squareman(game->getTexture()), 
 // m_ghost(game->getTexture()),
+m_maze(game->getTexture()),
 m_squareman(nullptr) {
 	// m_squareman.move(100, 100);
 	// m_ghost.move(200, 100);

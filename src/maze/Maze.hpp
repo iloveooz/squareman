@@ -8,7 +8,7 @@
 
 class Maze : public sf::Drawable {
 public:
-	Maze();
+	Maze(sf::Texture& texture);
 	// load maze data by using this method
 	void loadLevel(const std::string& name);
 	
@@ -43,6 +43,7 @@ private:
 	std::vector<sf::Vector2i> m_ghostPositions;
 	
 	sf::RenderTexture m_renderTexture;
+	sf::Texture& m_texture;
 };
 
 #endif // SQUAREMAN_MAZE_HPP

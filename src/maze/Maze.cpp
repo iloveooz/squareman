@@ -1,10 +1,9 @@
 #include "Maze.hpp"
 #include "../dot/Dot.hpp"
 
-Maze::Maze() : 
-m_mazeSize(0, 0) {
-	
-}
+Maze::Maze(sf::Texture& texture) : 
+m_mazeSize(0, 0),
+m_texture(texture) {}
 
 void Maze::loadLevel(const std::string& name) {
 	sf::Image levelData;
