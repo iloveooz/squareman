@@ -123,7 +123,9 @@ void PlayingState::pressButton() {
 	// m_ghost.setWeak(sf::seconds(1));
 }
 
-void PlayingState::moveStick(sf::Vector2i direction) { }
+void PlayingState::moveStick(sf::Vector2i direction) {
+	m_squareman->setDirection(direction);
+}
 
 void PlayingState::update(sf::Time delta) { 
 	m_camera.setCenter(m_squareman->getPosition());
