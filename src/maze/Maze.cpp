@@ -48,21 +48,97 @@ void Maze::loadLevel(const std::string& name) {
 	m_renderTexture.create(32 * m_mazeSize.x, 32 * m_mazeSize.y);
 	m_renderTexture.clear(sf::Color::Black);
 	
-	// draw something ...
+	sf::RectangleShape wall;
+	wall.setSize(sf::Vector2f(32, 32));
+	wall.setFillColor(sf::Color::Blue);
+	
+	sf::Sprite border(m_texture);
+	border.setTextureRect(sf::IntRect(16, 0, 16, 32));
+	border.setOrigin(0, 16);
+	
+	sf::Sprite innerCorner(m_texture);
+	innerCorner.setTextureRect(sf::IntRect(0, 0, 16, 16));
+	innerCorner.setOrigin(0, 16);
+	
+	sf::Sprite outerCorner(m_texture);
+	outerCorner.setTextureRect(sf::IntRect(0, 16, 16, 16));
+	outerCorner.setOrigin(0, 16);
 	
 	m_renderTexture.display(); 
 	
 	for (unsigned int i = 0; i < m_mazeData.size(); i++) {
 		sf::Vector2i position = indexToPosition(i);
 		
-		if (m_mazeData[i] == Wall) {
-			sf::RectangleShape wall;
-			
-			wall.setSize(sf::Vector2f(32, 32));
-			wall.setFillColor(sf::Color::Blue);
+		if (isWall(position)) {
 			wall.setPosition(32 * position.x, 32 * position.y);
-	
 			m_renderTexture.draw(wall);
+			
+			border.setPosition(mapCellToPixel(position));
+			innerCorner.setPosition(mapCellToPixel(position));
+			outerCorner.setPosition(mapCellToPixel(position));
+			
+			// -- border
+			if (!isWall(position + sf::Vector2i(1, 0))) {
+				border.setRotation(0);
+				m_renderTexture.draw(border);
+			}
+			
+			if (!isWall(position + sf::Vector2i(0, 1))) {
+				border.setRotation(90);
+				m_renderTexture.draw(border);
+			}
+			
+			if (!isWall(position + sf::Vector2i(-1, 0))) {
+				border.setRotation(180);
+				m_renderTexture.draw(border);
+			}
+			
+			if (!isWall(position + sf::Vector2i(0, -1))) {
+				border.setRotation(270);
+				m_renderTexture.draw(border);
+			}
+			
+			// -- innerCorner
+			if (isWall(position + sf::Vector2i(1, 0)) && isWall(position + sf::Vector2i(0, -1))) {
+				innerCorner.setRotation(0);
+				m_renderTexture.draw(innerCorner);
+			}
+			
+			if (isWall(position + sf::Vector2i(0, 1)) && isWall(position + sf::Vector2i(1, 0))) {
+				innerCorner.setRotation(90);
+				m_renderTexture.draw(innerCorner);
+			}
+			
+			if (isWall(position + sf::Vector2i(-1, 0)) && isWall(position + sf::Vector2i(0, 1))) {
+				innerCorner.setRotation(180);
+				m_renderTexture.draw(innerCorner);
+			}
+			
+			if (isWall(position + sf::Vector2i(0, -1)) && isWall(position + sf::Vector2i(-1, 0))) {
+				innerCorner.setRotation(270);
+				m_renderTexture.draw(innerCorner);
+			}
+			
+			// -- outerCorner
+			if (!isWall(position + sf::Vector2i(1, 0)) && !isWall(position + sf::Vector2i(0, -1))) {
+				outerCorner.setRotation(0);
+				m_renderTexture.draw(outerCorner);
+			}
+			
+			if (!isWall(position + sf::Vector2i(0, 1)) && !isWall(position + sf::Vector2i(1, 0))) {
+				outerCorner.setRotation(90);
+				m_renderTexture.draw(outerCorner);
+			}
+			
+			if (!isWall(position + sf::Vector2i(-1, 0)) && !isWall(position + sf::Vector2i(0, 1))) {
+				outerCorner.setRotation(180);
+				m_renderTexture.draw(outerCorner);
+			}
+			
+			if (!isWall(position + sf::Vector2i(0, -1)) && !isWall(position + sf::Vector2i(-1, 0))) {
+				outerCorner.setRotation(270);
+				m_renderTexture.draw(outerCorner);
+			}
 		}
 	}
 }
