@@ -1,6 +1,8 @@
 #ifndef SQUAREMAN_CHARACTER_HPP
 #define SQUAREMAN_CHARACTER_HPP
 
+#include <array>
+
 #include <SFML/Graphics.hpp>
 
 #include "../maze/Maze.hpp"
@@ -19,12 +21,20 @@ public:
 	void setSpeed(float speed);
 	float getSpeed() const;
 	
+	bool willMove() const;
+
+protected:
+	virtual void changeDirection() {};
+	
 private:
 	float m_speed;
 	Maze* m_maze;
 	
 	sf::Vector2i m_currentDirection;
 	sf::Vector2i m_nextDirection;
+	
+	sf::Vector2i m_previousIntersection;
+	std::array<bool, 4> m_availableDirections;
 };
 
 #endif // SQUAREMAN_CHARACTER_HPP

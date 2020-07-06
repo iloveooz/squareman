@@ -99,7 +99,7 @@ m_squareman(nullptr) {
 	m_squareman->setPosition(m_maze.mapCellToPixel(m_maze.getSquaremanPosition()));
 	
 	for (auto ghostPosition : m_maze.getGhostPositions()) {
-		Ghost* ghost = new Ghost(game->getTexture());
+		Ghost* ghost = new Ghost(game->getTexture(), m_squareman);
 		ghost->setMaze(&m_maze);
 		ghost->setPosition(m_maze.mapCellToPixel(ghostPosition));
 		m_ghosts.push_back(ghost);
