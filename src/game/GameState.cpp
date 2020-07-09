@@ -123,6 +123,7 @@ void PlayingState::moveCharactersToInitialPosition() {
 	for (unsigned int i = 0; i < m_ghosts.size(); i++) {
 		m_ghosts[i]->setPosition(m_maze.mapCellToPixel(ghostPositions[i]));
 	}
+	updateCameraPosition();
 }
 
 void PlayingState::updateCameraPosition() {
@@ -142,7 +143,7 @@ void PlayingState::updateCameraPosition() {
 }
 
 void PlayingState::insertCoin() { 
-	// m_squareman.die();
+	m_squareman->die();
 }
 
 void PlayingState::pressButton() { 
