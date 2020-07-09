@@ -2,7 +2,7 @@
 #include <iostream>
 
 Game::Game() : 
-m_window(sf::VideoMode(640, 480), "SquareMan") {
+m_window(sf::VideoMode(480, 500), "SquareMan") {
 	
 	m_window.setFramerateLimit(120);
 	
@@ -16,7 +16,7 @@ m_window(sf::VideoMode(640, 480), "SquareMan") {
 		throw std::runtime_error("Unable to load the texture file");
 	
 	m_gameStates[GameState::NoCoin] = new NoCoinState(this);
-	m_gameStates[GameState::GetReady] = new GetReadyState(this);
+	m_gameStates[GameState::GetReady] = new GetReadyState(this, m_gameStates[GameState::Playing]);
 	m_gameStates[GameState::Playing] = new PlayingState(this);
 	m_gameStates[GameState::Lost] = new LostState(this);
 	m_gameStates[GameState::Won] = new WonState(this);

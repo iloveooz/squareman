@@ -55,7 +55,7 @@ private:
 
 class GetReadyState : public GameState {
 public:
-	GetReadyState(Game* game);
+	GetReadyState(Game* game, GameState* playingState);
 
 	void insertCoin();
 	void pressButton();
@@ -66,6 +66,7 @@ public:
 	
 private:
 	sf::Text m_text;
+	GameState* m_playingState;
 };
 
 class PlayingState : public GameState {
@@ -84,12 +85,18 @@ public:
 	void updateCameraPosition();
 
 private:
-	// there is only one squareman
-	Squareman* m_squareman;
+	Squareman* m_squareman; // there is only one squareman
 	std::vector <Ghost*> m_ghosts;
-	// Ghost m_ghost;
 	Maze m_maze;
+	
 	sf::View m_camera;
+	sf::RenderTexture m_scene;
+	
+	sf::Text m_scoreText;
+	sf::Text m_levelText;
+	sf::Text m_remainingDotsText;
+	
+	sf::Sprite m_liveSprite[3];
 };
 
 class LostState : public GameState {
