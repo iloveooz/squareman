@@ -81,6 +81,11 @@ public:
 	void update(sf::Time delta);
 	void draw(sf::RenderWindow& window);
 	
+	void loadNextLevel();
+	void resetToZero();
+	void resetCurrentLevel();
+	void resetLiveCount();
+	
 	void moveCharactersToInitialPosition();
 	void updateCameraPosition();
 
@@ -97,11 +102,15 @@ private:
 	sf::Text m_remainingDotsText;
 	
 	sf::Sprite m_liveSprite[3];
+	
+	int m_level;
+	int m_liveCount;
+	int m_score;
 };
 
 class LostState : public GameState {
 public:
-	LostState(Game* game);
+	LostState(Game* game, GameState* playingState);
 
 	void insertCoin();
 	void pressButton();
@@ -114,11 +123,13 @@ private:
 	sf::Text m_text;
 	sf::Time m_countDown;
 	sf::Text m_countDownText;
+	
+	PlayingState* m_playingState;
 };
 
 class WonState : public GameState {
 public:
-	WonState(Game* game);
+	WonState(Game* game, GameState* playingState);
 
 	void insertCoin();
 	void pressButton();
@@ -129,6 +140,7 @@ public:
 	
 private:
 	sf::Text m_text;
+	PlayingState* m_playingState;
 };
 
 #endif // SQUAREMAN_GAMESTATE_HPP

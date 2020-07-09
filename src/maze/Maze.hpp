@@ -25,12 +25,15 @@ public:
 	sf::Vector2f mapCellToPixel(sf::Vector2i cell) const;
 	
 	bool isWall(sf::Vector2i position) const;
+	bool isDot(sf::Vector2i position) const;
 	bool isSuperDot(sf::Vector2i position) const;
 	bool isBonus(sf::Vector2i position) const;
 	
 	void pickObject(sf::Vector2i position);	
 	
 	sf::Vector2i getSize() const;
+	
+	int getRemainingDots() const;
 	
 private:
 	enum cellData {

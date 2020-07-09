@@ -96,19 +96,15 @@ void GetReadyState::draw(sf::RenderWindow& window) {
 PlayingState::PlayingState(Game* game) : 
 GameState(game), 
 m_maze(game->getTexture()),
-m_squareman(nullptr) {
-	m_maze.loadLevel("large-level");
-	
+m_squareman(nullptr),
+m_level(0),
+m_liveCount(3),
+m_score(0) {
 	m_squareman = new Squareman(game->getTexture());
 	m_squareman->setMaze(&m_maze);
 	m_squareman->setPosition(m_maze.mapCellToPixel(m_maze.getSquaremanPosition()));
 	
-	for (auto ghostPosition : m_maze.getGhostPositions()) {
-		Ghost* ghost = new Ghost(game->getTexture(), m_squareman);
-		ghost->setMaze(&m_maze);
-		ghost->setPosition(m_maze.mapCellToPixel(ghostPosition));
-		m_ghosts.push_back(ghost);
-	}
+	resetToZero();
 	
 	m_camera.setSize(sf::Vector2f(480, 480));
 	m_scene.create(480, 480);
@@ -116,17 +112,17 @@ m_squareman(nullptr) {
 	m_scoreText.setFont(game->getFont());
 	m_scoreText.setCharacterSize(10);
 	m_scoreText.setPosition(10, 480);
-	m_scoreText.setString("0 points");
+	// m_scoreText.setString("0 points");
 	
 	m_levelText.setFont(game->getFont());
 	m_levelText.setCharacterSize(10);
 	m_levelText.setPosition(160, 480);
-	m_levelText.setString("level x-y");
+	// m_levelText.setString("level x-y");
 	
 	m_remainingDotsText.setFont(game->getFont());
 	m_remainingDotsText.setCharacterSize(10);
 	m_remainingDotsText.setPosition(280, 480);
-	m_remainingDotsText.setString("0 dots");
+	// m_remainingDotsText.setString("0 dots");
 	
 	for (auto& liveSprite : m_liveSprite) {
 		liveSprite.setTexture(game->getTexture());
@@ -143,6 +139,48 @@ PlayingState::~PlayingState() {
 	
 	for (Ghost* ghost : m_ghosts)
 		delete ghost;
+}
+
+void PlayingState::loadNextLevel() {
+	m_maze.loadLevel("large-level-debug");
+	
+	m_level++;
+	
+	int mapLevel = m_level % 3;
+	int speedLevel = std::floor(m_level / 3);
+	
+	if (mapLevel == 0) 
+		m_maze.loadLevel("small");
+	else if (mapLevel == 1)
+		m_maze.loadLevel("medium");
+	else if (mapLevel == 2)
+		m_maze.loadLevel("large");
+		
+	// destroy previous characters
+	for (Ghost* ghost : m_ghosts)
+		delete ghost;
+	m_ghosts.clear();
+	
+	// create new characters
+	for (auto ghostPosition : m_maze.getGhostPositions()) {
+		Ghost* ghost = new Ghost(getGame()->getTexture(), m_squareman);
+		ghost->setMaze(&m_maze);
+		ghost->setPosition(m_maze.mapCellToPixel(ghostPosition));
+		m_ghosts.push_back(ghost);
+	}
+	
+	// change speed according to the new level
+	float speed = 100 + (speedLevel * 50);
+	
+	m_squareman->setSpeed(speed + 25);
+	
+	for (auto& ghost : m_ghosts)
+		ghost->setSpeed(speed);
+	
+	moveCharactersToInitialPosition();
+	
+	// updating level text
+	m_levelText.setString("level " + std::to_string(speedLevel) + " - " + std::to_string(mapLevel + 1));
 }
 
 void PlayingState::moveCharactersToInitialPosition() {
@@ -184,6 +222,22 @@ void PlayingState::moveStick(sf::Vector2i direction) {
 	m_squareman->setDirection(direction);
 }
 
+void PlayingState::resetToZero() {
+	resetLiveCount();
+	m_level = 0;
+	resetCurrentLevel();
+	m_score = 0;
+}
+
+void PlayingState::resetCurrentLevel() {
+	m_level--;
+	loadNextLevel();
+}
+
+void PlayingState::resetLiveCount() {
+	m_liveCount = 3;
+}
+
 void PlayingState::update(sf::Time delta) { 
 	m_squareman->update(delta);
 	
@@ -198,11 +252,19 @@ void PlayingState::update(sf::Time delta) {
 	if (offset.x <= 2 && offset.x >= -2 && offset.y <= 2 && offset.y >= -2) {
 		sf::Vector2i cellPosition = m_maze.mapPixelToCell(pixelPosition);
 		
-		if (m_maze.isSuperDot(cellPosition)) {
+		if (m_maze.isDot(cellPosition)) {
+			m_score += 5;
+		}
+		else if (m_maze.isSuperDot(cellPosition)) {
 			for (Ghost* ghost : m_ghosts) {
 				ghost->setWeak(sf::seconds(5));
+				m_score += 25;
 			}
 		}
+		else if (m_maze.isBonus(cellPosition)) {
+			m_score += 500;
+		}
+		
 		m_maze.pickObject(cellPosition);
 	}
 	
@@ -211,6 +273,7 @@ void PlayingState::update(sf::Time delta) {
 			if (ghost->isWeak()) {
 				// the ghost dies
 				m_ghosts.erase(std::find(m_ghosts.begin(), m_ghosts.end(), ghost));
+				m_score += 100;
 			} else {
 				// squareman dies
 				m_squareman->die();
@@ -220,10 +283,24 @@ void PlayingState::update(sf::Time delta) {
 	
 	if (m_squareman->isDead()) {
 		m_squareman->reset();
-		moveCharactersToInitialPosition();
+		m_liveCount--;
+		
+		if (m_liveCount == 0) {
+			getGame()->changeGameState(GameState::Lost);
+		} else {
+			moveCharactersToInitialPosition();
+		}
 	}
 	
+	if (m_maze.getRemainingDots() == 0) {
+		getGame()->changeGameState(GameState::Won);
+	}
+
 	updateCameraPosition();
+	
+	// updating score text
+	m_scoreText.setString(std::to_string(m_score) + " points");
+	m_remainingDotsText.setString(std::to_string(m_maze.getRemainingDots()) + " dots");
 }
 
 void PlayingState::draw(sf::RenderWindow& window) {
@@ -243,14 +320,16 @@ void PlayingState::draw(sf::RenderWindow& window) {
 	window.draw(m_levelText);
 	window.draw(m_remainingDotsText);
 	
-	for (unsigned int i = 0; i < 3; i++) {
+	for (unsigned int i = 0; i < m_liveCount; i++) {
 		window.draw(m_liveSprite[i]);
 	}
 }
 
 
 // ----- LostState
-LostState::LostState(Game* game) : GameState(game) {
+LostState::LostState(Game* game, GameState* playingState) : 
+GameState(game),
+m_playingState(static_cast<PlayingState*>(playingState)) { 
 	m_text.setFont(game->getFont());
 	m_text.setString("You LOST!");
 	m_text.setCharacterSize(42);
@@ -264,7 +343,12 @@ LostState::LostState(Game* game) : GameState(game) {
 	
 }
 
-void LostState::insertCoin() { }
+void LostState::insertCoin() {
+	m_playingState->resetCurrentLevel();
+	m_playingState->resetLiveCount();
+	
+	getGame()->changeGameState(GameState::GetReady);
+}
 
 void LostState::pressButton() { }
 
@@ -273,8 +357,10 @@ void LostState::moveStick(sf::Vector2i direction) { }
 void LostState::update(sf::Time delta) { 
 	m_countDown += delta;
 	
-	if (m_countDown.asSeconds() >= 10) 
+	if (m_countDown.asSeconds() >= 10) {
+		m_playingState->resetToZero();
 		getGame()->changeGameState(GameState::NoCoin);
+	}
 		
 	m_countDownText.setString("Insert a coin to continue... " + std::to_string(10 - static_cast<int>(m_countDown.asSeconds())));
 }
@@ -286,7 +372,9 @@ void LostState::draw(sf::RenderWindow& window) {
 
 
 // ----- WonState
-WonState::WonState(Game* game) : GameState(game) { 
+WonState::WonState(Game* game, GameState* playingState) : 
+GameState(game),
+m_playingState(static_cast<PlayingState*>(playingState)) { 
 	m_text.setFont(game->getFont());
 	m_text.setString("You WON!");
 	m_text.setCharacterSize(42);
@@ -304,8 +392,10 @@ void WonState::update(sf::Time delta) {
 	static sf::Time timeBuffer = sf::Time::Zero;
 	timeBuffer += delta;
 	
-	if (timeBuffer.asSeconds() > 5)
+	if (timeBuffer.asSeconds() > 5) {
+		m_playingState->loadNextLevel();
 		getGame()->changeGameState(GameState::GetReady);
+	}
 }
 
 void WonState::draw(sf::RenderWindow& window) { 
