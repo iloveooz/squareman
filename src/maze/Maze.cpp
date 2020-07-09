@@ -158,7 +158,7 @@ void Maze::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 		}
 		else if (m_mazeData[i] == SuperDot) {
 			superDot.setPosition(32 * position.x + 16, 32 * position.y + 16);
-			target.draw(dot, states);
+			target.draw(superDot, states);
 		}
 	}
 }

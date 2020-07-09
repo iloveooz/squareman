@@ -14,7 +14,7 @@ sf::CircleShape getSuperDot() {
 	sf::CircleShape superDot;
 	
 	superDot.setRadius(8);
-	superDot.setFillColor(sf::Color::White);
+	superDot.setFillColor(sf::Color::Green);
 	superDot.setOrigin(4, 4);
 	
 	return superDot;
