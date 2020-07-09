@@ -115,19 +115,17 @@ PlayingState::~PlayingState() {
 		delete ghost;
 }
 
-void PlayingState::insertCoin() { 
-	// m_squareman.die();
+void PlayingState::moveCharactersToInitialPosition() {
+	m_squareman->setPosition(m_maze.mapCellToPixel(m_maze.getSquaremanPosition()));
+	
+	auto ghostPositions = m_maze.getGhostPositions();
+	
+	for (unsigned int i = 0; i < m_ghosts.size(); i++) {
+		m_ghosts[i]->setPosition(m_maze.mapCellToPixel(ghostPositions[i]));
+	}
 }
 
-void PlayingState::pressButton() { 
-	// m_ghost.setWeak(sf::seconds(1));
-}
-
-void PlayingState::moveStick(sf::Vector2i direction) {
-	m_squareman->setDirection(direction);
-}
-
-void PlayingState::update(sf::Time delta) { 
+void PlayingState::updateCameraPosition() {
 	m_camera.setCenter(m_squareman->getPosition());
 	
 	if (m_camera.getCenter().x < 240) 
@@ -141,11 +139,60 @@ void PlayingState::update(sf::Time delta) {
 		
 	if (m_camera.getCenter().y > m_maze.getSize().y * 32 - 240)
 		m_camera.setCenter(m_camera.getCenter().x, m_maze.getSize().y * 32 - 240);
-	
+}
+
+void PlayingState::insertCoin() { 
+	// m_squareman.die();
+}
+
+void PlayingState::pressButton() { 
+	// m_ghost.setWeak(sf::seconds(1));
+}
+
+void PlayingState::moveStick(sf::Vector2i direction) {
+	m_squareman->setDirection(direction);
+}
+
+void PlayingState::update(sf::Time delta) { 
 	m_squareman->update(delta);
 	
 	for (Ghost* ghost : m_ghosts)
 		ghost->update(delta);
+		
+	sf::Vector2f pixelPosition = m_squareman->getPosition();
+	sf::Vector2f offset(std::fmod(pixelPosition.x, 32), fmod(pixelPosition.y, 32));
+	
+	offset -= sf::Vector2f(16, 16);
+	
+	if (offset.x <= 2 && offset.x >= -2 && offset.y <= 2 && offset.y >= -2) {
+		sf::Vector2i cellPosition = m_maze.mapPixelToCell(pixelPosition);
+		
+		if (m_maze.isSuperDot(cellPosition)) {
+			for (Ghost* ghost : m_ghosts) {
+				ghost->setWeak(sf::seconds(5));
+			}
+		}
+		m_maze.pickObject(cellPosition);
+	}
+	
+	for (Ghost* ghost : m_ghosts) {
+		if (ghost->getCollisionBox().intersects(m_squareman->getCollisionBox())) {
+			if (ghost->isWeak()) {
+				// the ghost dies
+				m_ghosts.erase(std::find(m_ghosts.begin(), m_ghosts.end(), ghost));
+			} else {
+				// squareman dies
+				m_squareman->die();
+			}
+		}
+	}
+	
+	if (m_squareman->isDead()) {
+		m_squareman->reset();
+		moveCharactersToInitialPosition();
+	}
+	
+	updateCameraPosition();
 }
 
 void PlayingState::draw(sf::RenderWindow& window) {

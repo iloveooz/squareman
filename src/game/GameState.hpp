@@ -79,6 +79,9 @@ public:
 	
 	void update(sf::Time delta);
 	void draw(sf::RenderWindow& window);
+	
+	void moveCharactersToInitialPosition();
+	void updateCameraPosition();
 
 private:
 	// there is only one squareman

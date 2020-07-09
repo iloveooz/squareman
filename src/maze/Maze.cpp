@@ -212,3 +212,16 @@ bool Maze::isWall(sf::Vector2i position) const {
 		
 	return m_mazeData[positionToIndex(position)] == Wall;
 }
+
+bool Maze::isSuperDot(sf::Vector2i position) const {
+	return m_mazeData[positionToIndex(position)] == SuperDot;
+}
+
+bool Maze::isBonus(sf::Vector2i position) const {
+	return m_mazeData[positionToIndex(position)] == Bonus;
+}
+
+void Maze::pickObject(sf::Vector2i position) { 
+	assert(!isWall(position));
+	m_mazeData[positionToIndex(position)] = Empty;
+}

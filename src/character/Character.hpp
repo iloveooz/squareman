@@ -23,6 +23,8 @@ public:
 	
 	bool willMove() const;
 
+	sf::FloatRect getCollisionBox() const;
+	
 protected:
 	virtual void changeDirection() {};
 	

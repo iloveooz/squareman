@@ -15,6 +15,8 @@ public:
 	
 	void update(sf::Time delta);
 	
+	void reset();
+	
 private:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	
