@@ -58,7 +58,7 @@ void Squareman::update(sf::Time delta) {
 		m_runAnimator.update(delta);
 		m_runAnimator.animate(m_visual);
 	} else {
-		// m_dieAnimator.update(delta);
+		m_dieAnimator.update(delta);
 		m_dieAnimator.animate(m_visual);
 		
 		if (!m_dieAnimator.isPlaying()) { // squareman is definitly dead
